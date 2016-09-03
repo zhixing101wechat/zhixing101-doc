@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2016/9/3 22:29:23                            */
+/* Created on:     2016/9/3 22:33:33                            */
 /*==============================================================*/
 
 
@@ -23,7 +23,7 @@ drop table if exists MST_USER;
 /*==============================================================*/
 create table BN_BOOK_COMMENT
 (
-   id                   int not null comment 'ID',
+   id                   int not null auto_increment comment 'ID',
    book_id              int comment '评论图书ID',
    content              varchar(8192) comment '评论内容',
    comment_time         datetime comment '评论时间',
@@ -52,7 +52,7 @@ create index index_id on BN_BOOK_COMMENT
 /*==============================================================*/
 create table BN_USER_VIEW_BOOK_HISTORY
 (
-   id                   int not null comment 'ID',
+   id                   int not null auto_increment comment 'ID',
    user_id              int comment '用户ID',
    book_id              int comment '图书ID',
    last_view_time       datetime comment '最近浏览时间',
@@ -80,7 +80,7 @@ create index index_id on BN_USER_VIEW_BOOK_HISTORY
 /*==============================================================*/
 create table BN_USER_VIEW_BOOK_STORE_PLACE
 (
-   id                   int not null comment 'ID',
+   id                   int not null auto_increment comment 'ID',
    user_id              int comment '用户ID',
    book_store_place_id  int comment '图书存放点ID',
    last_view_time       datetime comment '最近浏览时间',
@@ -108,7 +108,7 @@ create index index_id on BN_USER_VIEW_BOOK_STORE_PLACE
 /*==============================================================*/
 create table MST_BOOK
 (
-   id                   int not null comment 'ID',
+   id                   int not null auto_increment comment 'ID',
    title_author         varchar(512) comment '题名与责任者',
    title                varchar(512) comment '题名',
    version_description  varchar(32) comment '版本说明',
@@ -209,7 +209,7 @@ create index index_isbn on MST_BOOK
 /*==============================================================*/
 create table MST_BOOKSHELF
 (
-   id                   int not null comment 'ID',
+   id                   int not null auto_increment comment 'ID',
    name                 varchar(512) comment '书架名',
    floor                varchar(8) comment '楼层',
    room_no              varchar(16) comment '房间号',
@@ -240,7 +240,7 @@ create index index_id on MST_BOOKSHELF
 /*==============================================================*/
 create table MST_BOOK_STORAGE_PLACE
 (
-   id                   int not null comment 'ID',
+   id                   int not null auto_increment comment 'ID',
    name                 varchar(512) comment '存放点名称',
    description          varchar(2048) comment '存放点描述',
    longtitude           varchar(32) comment '经度',
@@ -278,7 +278,7 @@ create index index_id on MST_BOOK_STORAGE_PLACE
 /*==============================================================*/
 create table MST_USER
 (
-   id                   int not null comment 'ID',
+   id                   int not null auto_increment comment 'ID',
    username             varchar(128) comment '用户名',
    wechat_open_id       varchar(128) comment '微信OpenID',
    mobile_phone         varchar(32) comment '手机',
