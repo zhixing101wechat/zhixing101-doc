@@ -30,3 +30,5 @@
 9/8（四） 利用spring quartz搭建access_token，jsapi_ticket中控服务
 9/9（五） 设计百度LBS云表结构
 9/10（六） 准备百度LBS云测试数据，初始化zhixing101-web(jeesite)工程，配置jenkins job
+
+9/12（一）解决zhixing-web(jeesite)工程在jenkins上打包报错的问题
