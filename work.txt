@@ -32,3 +32,4 @@
 9/10（六） 准备百度LBS云测试数据，初始化zhixing101-web(jeesite)工程，配置jenkins job
 
 9/12（一）解决zhixing-web(jeesite)工程在jenkins上打包报错的问题
+9/13（二）实现微信JS-SDK定位不够准确的情况下，以用户手指单击地点为中心，搜索周边图书存放点
