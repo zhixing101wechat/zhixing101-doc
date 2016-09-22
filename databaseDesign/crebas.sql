@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2016/9/3 22:33:33                            */
+/* Created on:     2016/9/23 0:50:14                            */
 /*==============================================================*/
 
 
@@ -23,17 +23,16 @@ drop table if exists MST_USER;
 /*==============================================================*/
 create table BN_BOOK_COMMENT
 (
-   id                   int not null auto_increment comment 'ID',
+   id                   int not null comment 'ID',
    book_id              int comment '评论图书ID',
    content              varchar(8192) comment '评论内容',
    comment_time         datetime comment '评论时间',
-   source               varchar(128) comment '评论来源',
-   user_id              int comment '评论者用户ID',
-   create_user          varchar(16) comment '创建者',
+   source               varchar(8) comment '评论来源',
+   create_user          int comment '创建者',
    create_time          datetime comment '创建时间',
-   update_user          varchar(16) comment '更新者',
+   update_user          int comment '更新者',
    update_time          datetime comment '更新时间',
-   delete_flag          varchar(1) comment '删除标志',
+   is_delete            varchar(1) comment '删除标志',
    primary key (id)
 );
 
@@ -48,6 +47,22 @@ create index index_id on BN_BOOK_COMMENT
 );
 
 /*==============================================================*/
+/* Index: index_book_id                                         */
+/*==============================================================*/
+create index index_book_id on BN_BOOK_COMMENT
+(
+   book_id
+);
+
+/*==============================================================*/
+/* Index: index_create_user                                     */
+/*==============================================================*/
+create index index_create_user on BN_BOOK_COMMENT
+(
+   create_user
+);
+
+/*==============================================================*/
 /* Table: BN_USER_VIEW_BOOK_HISTORY                             */
 /*==============================================================*/
 create table BN_USER_VIEW_BOOK_HISTORY
@@ -57,11 +72,11 @@ create table BN_USER_VIEW_BOOK_HISTORY
    book_id              int comment '图书ID',
    last_view_time       datetime comment '最近浏览时间',
    view_count           int comment '浏览次数',
-   create_user          varchar(16) comment '创建者',
+   create_user          int comment '创建者',
    create_time          datetime comment '创建时间',
-   update_user          varchar(16) comment '更新者',
+   update_user          int comment '更新者',
    update_time          datetime comment '更新时间',
-   delete_flag          varchar(1) comment '删除标志',
+   is_delete            varchar(1) comment '删除标志',
    primary key (id)
 );
 
@@ -76,6 +91,22 @@ create index index_id on BN_USER_VIEW_BOOK_HISTORY
 );
 
 /*==============================================================*/
+/* Index: index_user_id                                         */
+/*==============================================================*/
+create index index_user_id on BN_USER_VIEW_BOOK_HISTORY
+(
+   user_id
+);
+
+/*==============================================================*/
+/* Index: index_book_id                                         */
+/*==============================================================*/
+create index index_book_id on BN_USER_VIEW_BOOK_HISTORY
+(
+   book_id
+);
+
+/*==============================================================*/
 /* Table: BN_USER_VIEW_BOOK_STORE_PLACE                         */
 /*==============================================================*/
 create table BN_USER_VIEW_BOOK_STORE_PLACE
@@ -85,11 +116,11 @@ create table BN_USER_VIEW_BOOK_STORE_PLACE
    book_store_place_id  int comment '图书存放点ID',
    last_view_time       datetime comment '最近浏览时间',
    view_count           int comment '浏览次数',
-   create_user          varchar(16) comment '创建者',
+   create_user          int comment '创建者',
    create_time          datetime comment '创建时间',
-   update_user          varchar(16) comment '更新者',
+   update_user          int comment '更新者',
    update_time          datetime comment '更新时间',
-   delete_flag          varchar(1) comment '删除标志',
+   is_delete            varchar(1) comment '删除标志',
    primary key (id)
 );
 
@@ -104,37 +135,55 @@ create index index_id on BN_USER_VIEW_BOOK_STORE_PLACE
 );
 
 /*==============================================================*/
+/* Index: index_user_id                                         */
+/*==============================================================*/
+create index index_user_id on BN_USER_VIEW_BOOK_STORE_PLACE
+(
+   user_id
+);
+
+/*==============================================================*/
+/* Index: index_book_storage_place_id                           */
+/*==============================================================*/
+create index index_book_storage_place_id on BN_USER_VIEW_BOOK_STORE_PLACE
+(
+   book_store_place_id
+);
+
+/*==============================================================*/
 /* Table: MST_BOOK                                              */
 /*==============================================================*/
 create table MST_BOOK
 (
    id                   int not null auto_increment comment 'ID',
-   title_author         varchar(512) comment '题名与责任者',
-   title                varchar(512) comment '题名',
-   version_description  varchar(32) comment '版本说明',
-   author               varchar(512) comment '作者',
-   publication_distribution varchar(512) comment '出版发行项',
-   press                varchar(512) comment '出版社',
-   carrier_form         varchar(64) comment '载体形态项',
+   title_author         varchar(256) comment '题名与责任者',
+   title                varchar(256) comment '题名',
+   version              varchar(32) comment '版本说明',
+   publication          varchar(256) comment '出版发行项',
+   author               varchar(256) comment '作者',
+   publisher            varchar(256) comment '出版社',
+   binding              varchar(64) comment '载体形态项',
    language             varchar(32) comment '语言',
    general_note         varchar(512) comment '一般附注项',
    summary              varchar(2048) comment '摘要',
-   isbn                 varchar(64) comment 'ISBN',
-   keywords             varchar(512) comment '主题词',
-   chn_book_cate_id     varchar(64) comment '中图法分类号',
-   index_book_id        varchar(64) comment '索书号',
+   isbn10               varchar(32) comment 'ISBN-10',
+   isbn13               varchar(64) comment 'ISBN-13',
+   keywords             varchar(256) comment '主题词',
+   chn_cate_id          varchar(64) comment '中图法分类号',
+   index_id             varchar(64) comment '索书号',
    price                varchar(64) comment '定价',
-   bookshelf_id         varchar(16) comment '书架ID',
-   detail_position      varchar(128) comment '具体存放位置',
+   bookshelf_id         int comment '书架ID',
+   position             varchar(256) comment '具体存放位置',
    is_borrowed          varchar(1) comment '借阅状态',
-   front_cover_pic_id   varchar(64) comment '正面照片ID',
-   backbone_pic_id      varchar(64) comment '书脊照片ID',
-   back_cover_pic_id    varchar(64) comment '封底照片ID',
-   create_user          varchar(16) comment '创建者',
+   front_cover          varchar(64) comment '正面照片ID',
+   backbone             varchar(64) comment '书脊照片ID',
+   back_cover           varchar(64) comment '封底照片ID',
+   douban_image         varchar(256) comment '豆瓣图片',
+   create_user          int comment '创建者',
    create_time          datetime comment '创建时间',
-   update_user          varchar(16) comment '更新者',
+   update_user          int comment '更新者',
    update_time          datetime comment '更新时间',
-   delete_flag          varchar(1) comment '删除标志',
+   is_delete            varchar(1) comment '删除标志',
    primary key (id)
 );
 
@@ -165,43 +214,35 @@ create index index_author on MST_BOOK
 );
 
 /*==============================================================*/
-/* Index: index_keywords                                        */
+/* Index: index_chn_cate_id                                     */
 /*==============================================================*/
-create index index_keywords on MST_BOOK
+create index index_chn_cate_id on MST_BOOK
 (
-   keywords
+   chn_cate_id
 );
 
 /*==============================================================*/
-/* Index: index_chn_book_cate_id                                */
+/* Index: index_publisher                                       */
 /*==============================================================*/
-create index index_chn_book_cate_id on MST_BOOK
+create index index_publisher on MST_BOOK
 (
-   chn_book_cate_id
+   publisher
 );
 
 /*==============================================================*/
-/* Index: index_press                                           */
+/* Index: index_isbn10                                          */
 /*==============================================================*/
-create index index_press on MST_BOOK
+create index index_isbn10 on MST_BOOK
 (
-   press
+   isbn10
 );
 
 /*==============================================================*/
-/* Index: index_summary                                         */
+/* Index: index_isbn13                                          */
 /*==============================================================*/
-create index index_summary on MST_BOOK
+create index index_isbn13 on MST_BOOK
 (
-   summary
-);
-
-/*==============================================================*/
-/* Index: index_isbn                                            */
-/*==============================================================*/
-create index index_isbn on MST_BOOK
-(
-   isbn
+   isbn13
 );
 
 /*==============================================================*/
@@ -210,18 +251,18 @@ create index index_isbn on MST_BOOK
 create table MST_BOOKSHELF
 (
    id                   int not null auto_increment comment 'ID',
-   name                 varchar(512) comment '书架名',
+   name                 varchar(256) comment '书架名',
    floor                varchar(8) comment '楼层',
-   room_no              varchar(16) comment '房间号',
-   bookshelf_pic_id     varchar(2048) comment '书架图片ID',
+   room                 varchar(16) comment '房间号',
+   bookshelf_pic        varchar(64) comment '书架图片ID',
    longtitude           varchar(32) comment '经度',
    latitude             varchar(32) comment '纬度',
    book_storage_place_id int comment '所属图书存放点ID',
-   create_user          varchar(16) comment '创建者',
+   create_user          int comment '创建者',
    create_time          datetime comment '创建时间',
-   update_user          varchar(16) comment '更新者',
+   update_user          int comment '更新者',
    update_time          datetime comment '更新时间',
-   delete_flag          varchar(1) comment '删除标志',
+   is_delete            varchar(1) comment '删除标志',
    primary key (id)
 );
 
@@ -236,30 +277,39 @@ create index index_id on MST_BOOKSHELF
 );
 
 /*==============================================================*/
+/* Index: index_book_storage_place_id                           */
+/*==============================================================*/
+create index index_book_storage_place_id on MST_BOOKSHELF
+(
+   book_storage_place_id
+);
+
+/*==============================================================*/
 /* Table: MST_BOOK_STORAGE_PLACE                                */
 /*==============================================================*/
 create table MST_BOOK_STORAGE_PLACE
 (
    id                   int not null auto_increment comment 'ID',
-   name                 varchar(512) comment '存放点名称',
+   poi_id               varchar(64) comment '位置数据ID',
+   name                 varchar(256) comment '存放点名称',
    description          varchar(2048) comment '存放点描述',
    longtitude           varchar(32) comment '经度',
    latitude             varchar(32) comment '纬度',
-   province_id          varchar(32) comment '省份',
-   city_id              varchar(32) comment '城市',
-   district_id          varchar(32) comment '区县',
-   street_id            varchar(32) comment '街道',
-   address_detail       varchar(512) comment '详细地址',
+   province             varchar(32) comment '省份',
+   city                 varchar(32) comment '城市',
+   district             varchar(32) comment '区县',
+   street               varchar(32) comment '街道',
+   address              varchar(256) comment '详细地址',
    phone                varchar(32) comment '联系电话',
    mobile_phone         varchar(32) comment '手机',
-   owner_user_id        varchar(16) comment '存放点所有人ID',
-   open_time            varchar(512) comment '开放时间',
-   traffic              varchar(2048) comment '交通',
-   create_user          varchar(16) comment '创建者',
+   owner_user_id        int comment '存放点所有人ID',
+   open_time            varchar(256) comment '开放时间',
+   traffic              varchar(512) comment '交通',
+   create_user          int comment '创建者',
    create_time          datetime comment '创建时间',
-   update_user          varchar(16) comment '更新者',
+   update_user          int comment '更新者',
    update_time          datetime comment '更新时间',
-   delete_flag          varchar(1) comment '删除标志',
+   is_delete            varchar(1) comment '删除标志',
    primary key (id)
 );
 
@@ -274,23 +324,35 @@ create index index_id on MST_BOOK_STORAGE_PLACE
 );
 
 /*==============================================================*/
+/* Index: index_poi_id                                          */
+/*==============================================================*/
+create index index_poi_id on MST_BOOK_STORAGE_PLACE
+(
+   poi_id
+);
+
+/*==============================================================*/
 /* Table: MST_USER                                              */
 /*==============================================================*/
 create table MST_USER
 (
    id                   int not null auto_increment comment 'ID',
    username             varchar(128) comment '用户名',
-   wechat_open_id       varchar(128) comment '微信OpenID',
-   mobile_phone         varchar(32) comment '手机',
-   qq_id                varchar(32) comment 'QQ',
+   password             varchar(128) comment '密码',
+   open_id              varchar(128) comment '微信OpenID',
+   nickname             varchar(128) comment '微信昵称',
    wechat_id            varchar(128) comment '微信号',
-   weibo_id             varchar(512) comment '新浪微博',
-   email_address        varchar(64) comment '电子邮箱',
-   create_user          varchar(16) comment '创建者',
+   mobile_phone         varchar(32) comment '手机',
+   qq                   varchar(32) comment 'QQ',
+   weibo                varchar(128) comment '新浪微博',
+   email                varchar(128) comment '电子邮箱',
+   sex                  varchar(1) comment '性别',
+   birthday             date comment '生日',
+   create_user          int comment '创建者',
    create_time          datetime comment '创建时间',
-   update_user          varchar(16) comment '更新者',
+   update_user          int comment '更新者',
    update_time          datetime comment '更新时间',
-   delete_flag          varchar(1) comment '删除标志',
+   is_delete            varchar(1) comment '删除标志',
    primary key (id)
 );
 
@@ -305,26 +367,26 @@ create index index_id on MST_USER
 );
 
 alter table BN_BOOK_COMMENT add constraint FK_Reference_1 foreign key (book_id)
-      references MST_BOOK (id);
+      references MST_BOOK (id) on delete restrict on update restrict;
 
-alter table BN_BOOK_COMMENT add constraint FK_Reference_2 foreign key (user_id)
-      references MST_USER (id);
+alter table BN_BOOK_COMMENT add constraint FK_Reference_9 foreign key (create_user)
+      references MST_USER (id) on delete restrict on update restrict;
 
 alter table BN_USER_VIEW_BOOK_HISTORY add constraint FK_Reference_7 foreign key (user_id)
-      references MST_USER (id);
+      references MST_USER (id) on delete restrict on update restrict;
 
 alter table BN_USER_VIEW_BOOK_HISTORY add constraint FK_Reference_8 foreign key (book_id)
-      references MST_BOOK (id);
+      references MST_BOOK (id) on delete restrict on update restrict;
 
 alter table BN_USER_VIEW_BOOK_STORE_PLACE add constraint FK_Reference_5 foreign key (book_store_place_id)
-      references MST_BOOK_STORAGE_PLACE (id);
+      references MST_BOOK_STORAGE_PLACE (id) on delete restrict on update restrict;
 
 alter table BN_USER_VIEW_BOOK_STORE_PLACE add constraint FK_Reference_6 foreign key (user_id)
-      references MST_USER (id);
+      references MST_USER (id) on delete restrict on update restrict;
 
 alter table MST_BOOK add constraint FK_Reference_3 foreign key (id)
-      references MST_BOOKSHELF (id);
+      references MST_BOOKSHELF (id) on delete restrict on update restrict;
 
 alter table MST_BOOKSHELF add constraint FK_Reference_4 foreign key (book_storage_place_id)
-      references MST_BOOK_STORAGE_PLACE (id);
+      references MST_BOOK_STORAGE_PLACE (id) on delete restrict on update restrict;
 
