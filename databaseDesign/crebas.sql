@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2016/9/23 20:11:31                           */
+/* Created on:     2016/9/24 2:16:14                            */
 /*==============================================================*/
 
 
@@ -167,8 +167,8 @@ create table MST_BOOK
    language             varchar(32) comment '语言',
    general_note         varchar(512) comment '一般附注项',
    summary              varchar(2048) comment '摘要',
-   isbn_10              varchar(32) comment 'ISBN',
-   isbn_13              varchar(32),
+   isbn_10              varchar(32) comment 'ISBN_10',
+   isbn_13              varchar(32) comment 'ISBN_13',
    keywords             varchar(512) comment '主题词',
    chn_cate_id          varchar(64) comment '中图法分类号',
    index_id             varchar(64) comment '索书号',
@@ -179,6 +179,7 @@ create table MST_BOOK
    front_cover          varchar(64) comment '正面照片ID',
    backbone             varchar(64) comment '书脊照片ID',
    back_cover           varchar(64) comment '封底照片ID',
+   douban_image_url     varchar(256) comment '豆瓣图书图片URL',
    create_user          bigint comment '创建者',
    create_time          datetime comment '创建时间',
    update_user          bigint comment '更新者',
@@ -282,7 +283,7 @@ create table MST_USER
    qq                   varchar(32) comment 'QQ',
    weibo                varchar(128) comment '新浪微博',
    email                varchar(128) comment '电子邮箱',
-   sex                  tinyint,
+   sex                  tinyint comment '性别',
    user_image           varchar(64) comment '用户头像',
    create_user          bigint comment '创建者',
    create_time          datetime comment '创建时间',
