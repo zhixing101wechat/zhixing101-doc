@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2016/9/24 2:16:14                            */
+/* Created on:     2016/9/26 22:26:51                           */
 /*==============================================================*/
 
 
@@ -321,7 +321,7 @@ alter table BN_USER_VIEW_BOOK_STORE_PLACE_HISTORY add constraint FK_Reference_5 
 alter table BN_USER_VIEW_BOOK_STORE_PLACE_HISTORY add constraint FK_Reference_6 foreign key (user_id)
       references MST_USER (id) on delete restrict on update restrict;
 
-alter table MST_BOOK add constraint FK_Reference_3 foreign key (id)
+alter table MST_BOOK add constraint FK_Reference_3 foreign key (bookshelf_id)
       references MST_BOOKSHELF (id) on delete restrict on update restrict;
 
 alter table MST_BOOKSHELF add constraint FK_Reference_4 foreign key (book_storage_place_id)
