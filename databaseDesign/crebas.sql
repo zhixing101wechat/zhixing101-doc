@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2016/11/23 23:06:58                          */
+/* Created on:     2016/11/28 21:27:47                          */
 /*==============================================================*/
 
 
@@ -248,9 +248,10 @@ create table MST_BOOK_STORAGE_PLACE
    phone                varchar(32) comment '联系电话',
    mobile_phone         varchar(32) comment '手机',
    owner_user_id        bigint comment '存放点所有人ID',
-   owner_wechat_open_id varchar(128) comment '微信OpenID',
+   owner_wechat_open_id varchar(128) comment '微信OpenId',
    open_time            varchar(512) comment '开放时间',
    traffic              varchar(1024) comment '交通',
+   picture_id           varchar(1024) comment '图片Id',
    create_user          bigint comment '创建者',
    create_time          datetime comment '创建时间',
    update_user          bigint comment '更新者',
